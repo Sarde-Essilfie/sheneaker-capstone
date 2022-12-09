@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'sneaker_app.apps.SneakerAppConfig',
     'users_app.apps.UsersAppConfig',
+    'api.apps.ApiConfig',
+    'rest_framework',
 
 
 ]
@@ -59,7 +61,7 @@ ROOT_URLCONF = 'sneaker_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,3 +128,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "users_app.CustomUser"
+
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"

@@ -15,8 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
+    path("", TemplateView.as_view(template_name="home.html"), name="home"),
     path('admin/', admin.site.urls),
-    path('sneaker/', include('sneaker_app.urls')),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
+
+    path('users-app/', include('django.contrib.auth.urls')),
+    path('users-app/', include('users_app.urls')),
+
+    # path('sneaker-app/', include('sneaker_app.urls')),
+    path('api/v1/', include('api.urls')),
+    # sardes-awesome-sneakers.com/api/v1/
+    # http://127.0.0.1:8000/api/v1/
+    # http://localhost:8000/api/v1/
+
 ]

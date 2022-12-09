@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+Hi {{ user.username }}
+<p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Log In</a> |
+    <a href="{% url 'signup' %}">Sign Up</a>
+{% endif %}
+{% endblock %}
+<div id="app">
+    <h1>[[ message ]]</h1>
+    {% comment %} <pre>[[ listOfSneakers ]]</pre>  {% endcomment %}
+    {% comment %} <ul>
+        <li v-for="sneaker in listOfSneakers">
+            [[ sneaker.name ]]
+        </li>
+    </ul> {% endcomment %}
+</div>
+<script src="https://unpkg.com/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        delimiters: ['[[', ']]'],
+        data:{
+            message: "She'Neaker!",
+            listOfSneakers: '',
+            csrf_token: '',
+        },
+        methods: {
+            loadSneakers: function () {
+                console.log('loading sneakers')
+                axios({
+                    method: 'get',
+                    url: 'https://the-sneaker-database.p.rapidapi.com/sneakers', 
+                    params: {limit: '10'},
+                    headers: {
+                        'X-RapidAPI-Key': 'a7f0d72c4emshc06616986d50ecep1b54e5jsn3f9c98fcc3f6',
+                        'X-RapidAPI-Host': 'the-sneaker-database.p.rapidapi.com',
+                        "X-CSRFToken": this.csrf_token
+                    }
+                }).then(resonse => {
+                    console.log(response.data)
+                    this.listOfSneakers = response.data
+                    console.log('listOfSneakers', this.listOfSneakers)
+                    
+                }).catch(error => {
+                    console.log('error.response: ', error.response)
+                    console.log('error.response.data: ', error.response.data)
+                })
+        },
+
+
+
+        mounted: function () {
+            console.log('mounting')
+            this.csrf_token = document.querySelector("input[name=csrfmiddlewaretoken]").value
+            this.loadSneakers()
+        }
+    });
+</script>
