@@ -7,36 +7,38 @@
 
 {% if user.is_authenticated %}
 Hi {{ user.username }}
-<p><a href="{% url 'logout' %}">Log Out</a></p>
+<p><a href="{% url 'logout' %}">LOG OUT</a></p>
 {% else %}
     <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a> |
-    <a href="{% url 'signup' %}">Sign Up</a>
+    <a href="{% url 'login' %}">LOG IN</a> |
+    <a href="{% url 'signup' %}">SIGN UP</a>
 {% endif %}
 
 <div id="app">
+    <div>
+        <input v-model="brand" placeholder="search by brand">
+        <button @click="searchSneakersByBrand"><i class="fa fa-search"></i></button>
+    </div>
     <h1>[[ message ]]</h1>
-    <ul> 
-        <li v-for="sneaker in listOfSneakers">
-            sneaker-image: <img v-bind:src="sneaker.image.original" alt="" width="400" height="400" 
-            v-if="sneaker.image.original"> <br>
-            
-            name: [[ sneaker.name ]]<br>
-            brand: [[ sneaker.brand ]]<br>
-            color: [[ sneaker.color ]]<br>
-            price: $[[ sneaker.price ]]<br>
-            buy: [[ sneaker.links ]]<br>
-            <br>
-        </li>
-    </ul>  
-
-
+    
     <ul>
-        <li>
-            
-        </li>
-    </ul>
+        <template v-for="sneaker in listOfSneakers">
+            <li v-if="sneaker.image.original">
+               <button @click="addSneakersToList"><i class="fa-regular fa-heart"></i></button>
+        
+               <img v-bind:src="sneaker.image.original" alt="" width="400" height="400"> <br>
+                name: [[ sneaker.name ]]<br>
+                brand: [[ sneaker.brand ]]<br>
+                color: [[ sneaker.color ]]<br>
+                price: $[[ sneaker.price ]]<br>
+                links: [[ sneaker.links ]]<br>
+                <button>Buy</button><br>
+                <br>
+            </li>
+        </template>
+    </ul>  
 </div>
+
 
 <script src="https://unpkg.com/vue@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
@@ -45,10 +47,19 @@ Hi {{ user.username }}
         el: '#app',
         delimiters: ['[[', ']]'],
         data: {
-            message: "She'Neaker!",
+            message: "She'Neaker",
             urlEndpoint: "/api/v1/sneakers/",
             listOfSneakers: '',
             brand: '',
+            addSneaker: {
+                image: '',
+                name: '',
+                brand: '',
+                color: '',
+                price: '',
+                links: '',
+            },
+            idToAdd: 1,
             csrf_token: '',
         },
 
@@ -68,14 +79,34 @@ Hi {{ user.username }}
                 })
 
             },
-
-            {% comment %} searchSneakersByBrand: function () {
+             searchSneakersByBrand: function () {
                 axios ({
                     method: 'get',
-                    url: `this.urlEndpoint + ${this.brand} `
-
+                    ///api/v1/sneakers/brand/?search=${}
+                    url: this.urlEndpoint + `brand/?search=${this.brand}`,
                 }).then(response => {
-            } {% endcomment %}
+                    console.log(response.data)
+                    this.listOfSneakers = response.data
+                }).catch(error => {
+                    console.log('error.response', error)
+                    console.log('error.response.data', error.response.data)
+                })
+            }, 
+            addSneakersToList: function () {
+                console.log("adding sneaker to list")
+                axios({
+                    method: 'get',
+                    url: this.urlEndpoint + `${this.idToAdd}/`,
+                    data: this.addSneaker,
+                }).then(response => {
+                    console.log(response.data)
+                    this.addSneaker
+                }).catch(error => {
+                    console.log('error.response', error)
+                    console.log('error.response.data', error.response.data)
+                })
+
+            },
             
           
 

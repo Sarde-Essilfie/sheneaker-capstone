@@ -27,11 +27,9 @@ urlpatterns = [
 
     # path('sneaker-app/', include('sneaker_app.urls')),
     path('api/v1/', include('api.urls')),
-    # sardes-awesome-sneakers.com/api/v1/
-    # http://127.0.0.1:8000/api/v1/
-    # http://localhost:8000/api/v1/
+   
 
 ]
-  # sardes-awesome-sneakers.com/api/v1/
+    # sardes-awesome-sneakers.com/api/v1/
     # http://127.0.0.1:8000/api/v1/
     # http://localhost:8000/api/v1/

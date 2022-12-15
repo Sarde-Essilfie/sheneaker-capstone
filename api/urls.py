@@ -6,9 +6,11 @@ from . import views
 router = DefaultRouter()
 router.register('sneakers', views.SneakerViewSet, basename='sneakers')
 
-urlpatterns = router.urls + [
-    path('currentuser/', views.CurrentUserView.as_view())
-]
+urlpatterns = [
+    path('currentuser/', views.CurrentUserView.as_view()),
+    path('sneakers/brand/', views.GetBrandsSearchView.as_view()),
+] + router.urls
+
     
 
 

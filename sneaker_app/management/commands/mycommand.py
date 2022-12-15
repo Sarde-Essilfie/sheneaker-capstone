@@ -17,7 +17,7 @@ class Command(BaseCommand):
         #if I only want WOMEN'S sneakers, should I filter those here?????
         response = requests.get('https://the-sneaker-database.p.rapidapi.com/sneakers', headers={"X-RapidAPI-Key": "a7f0d72c4emshc06616986d50ecep1b54e5jsn3f9c98fcc3f6",
                             "X-RapidAPI-Host": "the-sneaker-database.p.rapidapi.com"},
-                            params={
+                            params= {
                                 "limit": "30",
                                 "gender": "WOMEN"
                                 }

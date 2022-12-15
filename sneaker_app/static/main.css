@@ -1,0 +1,27 @@
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+h1 {
+    color: plum;
+    text-align: center;
+    /* font-family: 'La Belle Aurore', cursive; */
+
+}
+button {
+    color:plum;
+}
+
+body {
+    font-family: 'Bebas Neue', cursive;
+    /* font-family: 'Josefin Sans', sans-serif; */
+    /* font-family: 'La Belle Aurore', cursive; */
+     /* font-family: 'Prata', serif; */
+    /* font-family: 'Shadows Into Light', cursive;  */
+}
+footer p {
+    color: plum;
+    text-align: center;
+}
