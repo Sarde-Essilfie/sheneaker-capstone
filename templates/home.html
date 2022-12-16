@@ -5,21 +5,19 @@
 {% block content %}
 {% csrf_token %}
 
-{{user.favoriteSneakers.all}}
-
-
-
+{% comment %} {{user.favoriteSneakers.all}} {% endcomment %}
 {% if user.is_authenticated %}
-Hi {{ user.username }}
+HI {{ user.username }}
 <p><a href="{% url 'logout' %}">LOG OUT</a></p>
 {% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'login' %}">LOG IN</a> |
-    <a href="{% url 'signup' %}">SIGN UP</a>
+    <p>YOU ARE NOT LOGGED IN</p>
+    <a href="{% url 'login' %}">LOG IN</a> 
+    {% comment %} <a href="{% url 'signup' %}">SIGN UP</a> {% endcomment %}
 {% endif %}
 
 <div id="app">
-    <div>
+    <br>
+    <div id="search">
         <input v-model="brand" placeholder="search by brand">
         <button @click="searchSneakersByBrand"><i class="fa fa-search"></i></button>
     </div>
@@ -37,18 +35,19 @@ Hi {{ user.username }}
                  {% comment %} [[ sneaker.color ]]<br> {% endcomment %}
                 <h2>$[[ sneaker.price ]]</h2>
                 {% comment %} links: [[ sneaker.links ]]<br> {% endcomment %}
-                <button>Buy</button>
+                {% comment %} <button>Buy</button> {% endcomment %}
+                <a v-bind:href="sneaker.links.flightClub"><i class="fa-solid fa-cart-shopping"></i></a>
             </li>
         </template>
     </ul>  
-     <ul>
+     {% comment %} <ul>
         <template v-for="sneaker in listOfSneakers">
         <li v-if="sneaker.id">
         <li>
-        </template>
+        </template> {% endcomment %}
     </ul> 
 
-    [[currentUser.favorites]]
+    {% comment %} [[currentUser.favorites]] {% endcomment %}
 </div>
 <input type="hidden" value="{{request.user.id}}" id="userId">
 

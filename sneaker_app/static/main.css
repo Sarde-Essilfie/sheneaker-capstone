@@ -8,10 +8,21 @@ h1 {
     color: plum;
     text-align: center;
     font-family: 'Bebas Neue', cursive;
-    font-size: 24px;
+    font-size: 60px;
     /* font-family: 'La Belle Aurore', cursive; */
     /* font-family: 'Josefin Sans', sans-serif; */
 
+}
+a {
+    color:plum;
+    size: 60px;
+}
+nav a {
+    color: plum;
+    padding-right: 1em;
+}
+input {
+    width: 20%;
 }
 button {
     color:plum;
@@ -33,6 +44,16 @@ ul {
     flex-wrap: wrap;
     font-family: 'Josefin Sans', sans-serif;
     color: dimgray;
+    list-style-type: none;
 }
-  
 
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+}
+
+#search button {
+    width: 5%;
+}

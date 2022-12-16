@@ -18,7 +18,7 @@ class Command(BaseCommand):
         response = requests.get('https://the-sneaker-database.p.rapidapi.com/sneakers', headers={"X-RapidAPI-Key": "a7f0d72c4emshc06616986d50ecep1b54e5jsn3f9c98fcc3f6",
                             "X-RapidAPI-Host": "the-sneaker-database.p.rapidapi.com"},
                             params= {
-                                "limit": "31",
+                                "limit": "92",
                                 "gender": "WOMEN"
                                 }
                             )

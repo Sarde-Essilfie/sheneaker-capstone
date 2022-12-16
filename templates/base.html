@@ -8,8 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Base{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'main.css' %}">
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
+    <link rel="stylesheet" href="{% static 'main.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/0c3af48515.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,10 +19,20 @@
 <body>
     <header>
         <h1>She'Neaker</h1>
-        <nav>
+        {% comment %} <nav> {% endcomment %}
             {% comment %} <a href={% url 'admin:index' %} target="_blank">Django Admin Interface</a><br>
             <a href="/api/v1/">Django Browsable API</a> {% endcomment %}
-        </nav>
+        {% comment %} </nav> {% endcomment %}
+        <div class="name-topnav">
+            <div class="topnav">
+                <nav>
+                    <a href="{% url 'home' %}">BROWSE</a>
+                    <a href="#">ABOUT</a>
+                    <a href="{% url 'signup' %}">THE SHE'NEAKER CLUB</a>
+                    <a href="https://sneakernews.com/">THE SHE'NEAKER LIST</a>
+                </nav>
+            </div>
+        </div>
     </header>
     <main>
         {% block content %}
