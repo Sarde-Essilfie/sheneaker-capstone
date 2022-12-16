@@ -5,6 +5,7 @@ from . import views
 
 router = DefaultRouter()
 router.register('sneakers', views.SneakerViewSet, basename='sneakers')
+router.register('users', views.UserViewSet, basename='users')
 
 urlpatterns = [
     path('currentuser/', views.CurrentUserView.as_view()),

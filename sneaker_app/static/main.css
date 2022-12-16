@@ -7,7 +7,10 @@ html {
 h1 {
     color: plum;
     text-align: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
     /* font-family: 'La Belle Aurore', cursive; */
+    /* font-family: 'Josefin Sans', sans-serif; */
 
 }
 button {
@@ -15,13 +18,21 @@ button {
 }
 
 body {
-    font-family: 'Bebas Neue', cursive;
+    font-family: sans-serif;
     /* font-family: 'Josefin Sans', sans-serif; */
-    /* font-family: 'La Belle Aurore', cursive; */
      /* font-family: 'Prata', serif; */
     /* font-family: 'Shadows Into Light', cursive;  */
 }
 footer p {
     color: plum;
     text-align: center;
+    /* background-color: plum; */
 }
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Josefin Sans', sans-serif;
+    color: dimgray;
+}
+  
+

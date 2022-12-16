@@ -1,5 +1,5 @@
 from django.db import models
-
+from sneaker_project.settings import AUTH_USER_MODEL
 # Create your models here.
 
 
@@ -14,6 +14,7 @@ class Sneaker(models.Model):
     # links = models.URLField(max_length=200, default='https://stockx.com/nike-dunk-low-mineral-teal-gs')
     links = models.JSONField(blank=True, null=True)
     gender = models.CharField(max_length=200, default='N/A')
+    users = models.ManyToManyField(AUTH_USER_MODEL, related_name="favorites")
 
 
     def __str__(self):

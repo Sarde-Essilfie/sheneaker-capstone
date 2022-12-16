@@ -5,6 +5,10 @@
 {% block content %}
 {% csrf_token %}
 
+{{user.favoriteSneakers.all}}
+
+
+
 {% if user.is_authenticated %}
 Hi {{ user.username }}
 <p><a href="{% url 'logout' %}">LOG OUT</a></p>
@@ -19,25 +23,34 @@ Hi {{ user.username }}
         <input v-model="brand" placeholder="search by brand">
         <button @click="searchSneakersByBrand"><i class="fa fa-search"></i></button>
     </div>
-    <h1>[[ message ]]</h1>
+    {% comment %} <h1>[[ message ]]</h1> {% endcomment %}
+
     
     <ul>
         <template v-for="sneaker in listOfSneakers">
             <li v-if="sneaker.image.original">
-               <button @click="addSneakersToList"><i class="fa-regular fa-heart"></i></button>
+               <button @click="addSneakersToList(sneaker)"><i class="fa-regular fa-heart"></i></button>
         
                <img v-bind:src="sneaker.image.original" alt="" width="400" height="400"> <br>
-                name: [[ sneaker.name ]]<br>
-                brand: [[ sneaker.brand ]]<br>
-                color: [[ sneaker.color ]]<br>
-                price: $[[ sneaker.price ]]<br>
-                links: [[ sneaker.links ]]<br>
-                <button>Buy</button><br>
-                <br>
+                 <h3>[[ sneaker.brand ]]</h3>
+                 [[ sneaker.name ]]
+                 {% comment %} [[ sneaker.color ]]<br> {% endcomment %}
+                <h2>$[[ sneaker.price ]]</h2>
+                {% comment %} links: [[ sneaker.links ]]<br> {% endcomment %}
+                <button>Buy</button>
             </li>
         </template>
     </ul>  
+     <ul>
+        <template v-for="sneaker in listOfSneakers">
+        <li v-if="sneaker.id">
+        <li>
+        </template>
+    </ul> 
+
+    [[currentUser.favorites]]
 </div>
+<input type="hidden" value="{{request.user.id}}" id="userId">
 
 
 <script src="https://unpkg.com/vue@2"></script>
@@ -59,7 +72,9 @@ Hi {{ user.username }}
                 price: '',
                 links: '',
             },
-            idToAdd: 1,
+            currentUser: '',
+            currentUserEndpoint: "/api/v1/currentuser/",
+            sneakerUsers: '',
             csrf_token: '',
         },
 
@@ -75,7 +90,6 @@ Hi {{ user.username }}
                     console.log('List of Sneakers', this.listOfSneakers)
                 }).catch(error => {
                     console.log('error.response: ', error)
-                    console.log('error.response.data: ', error.response.data) 
                 })
 
             },
@@ -89,23 +103,44 @@ Hi {{ user.username }}
                     this.listOfSneakers = response.data
                 }).catch(error => {
                     console.log('error.response', error)
-                    console.log('error.response.data', error.response.data)
                 })
             }, 
-            addSneakersToList: function () {
+            addSneakersToList: function (sneaker) {
                 console.log("adding sneaker to list")
+                let userId = document.getElementById("userId").value
+                console.log(sneaker)
+                console.log('sneaker.users:', sneaker.users)
+                console.log(typeof sneaker.users)
+                this.sneakerUsers = sneaker.users
+
+                sneaker.users.push(this.currentUser.id)
                 axios({
-                    method: 'get',
-                    url: this.urlEndpoint + `${this.idToAdd}/`,
-                    data: this.addSneaker,
+                    method: 'patch',
+                    url: this.urlEndpoint + `${sneaker.id}/`,
+                    data: {
+                        "users": sneaker.users,
+                    },
+                    headers: {
+                        "X-CSRFToken": this.csrf_token
+                    },
                 }).then(response => {
                     console.log(response.data)
-                    this.addSneaker
+                    this.addSneaker = response.data
+                    console.log('added sneaker', this.addSneaker)
                 }).catch(error => {
                     console.log('error.response', error)
-                    console.log('error.response.data', error.response.data)
                 })
-
+            },
+            getCurrentUser: function () {
+                axios({
+                    method: 'get',
+                    url: this.currentUserEndpoint,
+                }).then(response => {
+                    console.log(response.data)
+                    this.currentUser = response.data
+                }).catch(error => {
+                    console.log('error.response', error)
+                })
             },
             
           
@@ -123,7 +158,7 @@ Hi {{ user.username }}
             console.log('mounting')
             this.csrf_token = document.querySelector("input[name=csrfmiddlewaretoken]").value
             this.getSneakers()
-
+            this.getCurrentUser()
         }
 
 
